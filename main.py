@@ -20,12 +20,13 @@ headers = {
 
 response = requests.get(url, headers=headers, params=querystring)
 
-res = response.json()
-
-current_temperature_celsius = res['current']['temp_c']
-
-weather = f"Say Current Temperature in  {city} is  {current_temperature_celsius} degree celcius"
-os.system(weather)
+if response.status_code == 200:
+	res = response.json()
+	current_temperature_celsius = res['current']['temp_c']
+	weather = f"Current Temperature in {city} is {current_temperature_celsius} degree Celsius"
+	os.system(f"say {weather}")  # Assuming you are using macOS for the 'say' command
+else:
+	print(f"Error: {response.status_code}")
 
 
 
